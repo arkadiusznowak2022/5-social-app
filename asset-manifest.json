@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/5-social-app/static/css/main.75b48c2b.css",
-    "main.js": "/5-social-app/static/js/main.e1fa7551.js",
+    "main.js": "/5-social-app/static/js/main.775000cf.js",
     "static/js/787.c45b6682.chunk.js": "/5-social-app/static/js/787.c45b6682.chunk.js",
     "static/media/wp2726525.webp": "/5-social-app/static/media/wp2726525.2072300c7e5b7d5105ee.webp",
     "index.html": "/5-social-app/index.html",
     "main.75b48c2b.css.map": "/5-social-app/static/css/main.75b48c2b.css.map",
-    "main.e1fa7551.js.map": "/5-social-app/static/js/main.e1fa7551.js.map",
+    "main.775000cf.js.map": "/5-social-app/static/js/main.775000cf.js.map",
     "787.c45b6682.chunk.js.map": "/5-social-app/static/js/787.c45b6682.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.75b48c2b.css",
-    "static/js/main.e1fa7551.js"
+    "static/js/main.775000cf.js"
   ]
 }
