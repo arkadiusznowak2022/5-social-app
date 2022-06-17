@@ -18,12 +18,13 @@ function Home() {
   const [activeBtn, setActiveBtn] = useState('friends');
   const [likes, setLikes] = useState([]);
 
-  //////////////
+  /////////////////
   //// API OBJECTS
 
-  const profileAPI = new API('profile', jwtToken);
+  // const profileAPI = new API('profile', jwtToken);
+  const [profileAPI] = useState(new API('profile', jwtToken));
   const choosePostsType = {
-    last: new API('last'),
+    last: new API('last', jwtToken),
     olderThen: new API('olderThen', jwtToken),
     newerThen: new API('newerThen', jwtToken),
   };
@@ -44,19 +45,24 @@ function Home() {
     profileAPI.getData((res) => {
       if (res.status === 200) setProfileData(res.data);
     });
-  }, []);
+  }, [profileAPI]);
 
   useEffect(() => {
     postsAPI.getData(displayPosts);
     allFollowsAPI.getData(displayUsersList);
   }, [profileData]);
 
+  useEffect(() => {
+    postsAPI.getData(displayPosts);
+  }, [users]);
+
   //////////////
   //// UI ACTIONS
 
   const clickDeletePost = (e) => {
     delPostAPI.setData({ post_id: e.target.id });
-    delPostAPI.getData(() => {
+    delPostAPI.getData((res) => {
+      console.log(res);
       postsAPI.getData(displayPosts);
     });
   };
