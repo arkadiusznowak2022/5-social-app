@@ -20,7 +20,8 @@ export function checkPassword(pass) {
   return flag;
 }
 
-export const checkLoginTime = (storage, timeToLogout) => {
+export const checkLoginTime = (timeToLogout) => {
+  const storage = localStorage.getItem('chatterfield');
   if (!storage) return false;
 
   const loginTime = JSON.parse(storage).loginTime;

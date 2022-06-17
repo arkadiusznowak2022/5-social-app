@@ -23,25 +23,23 @@ import { TIME_TO_LOGOUT } from './data/config';
 
 function App() {
   const storage = localStorage.getItem('chatterfield');
-  const [loginGate, setLoginGate] = useState(
-    checkLoginTime(storage, TIME_TO_LOGOUT)
-  );
+  const [loginGate, setLoginGate] = useState(checkLoginTime(TIME_TO_LOGOUT));
 
   return (
-    <HashRouter basename='/'>
+    <HashRouter>
       <Nav loginGate={loginGate} setLoginGate={setLoginGate} />
       <Routes>
-        <Route path='/' element={<Main />}></Route>
+        <Route path='/' element={<Main setLoginGate={setLoginGate} />}></Route>
         <Route
           path='/loggedout'
           element={<LoggedOut setLoginGate={setLoginGate} />}
         />
         <Route path='/login' element={<Login setLoginGate={setLoginGate} />} />
         <Route path='/signup' element={<SignUp />} />
-        {loginGate && <Route path='/home' element={<Home />} />}
-        {!loginGate && (
-          <Route path='/home' element={<Navigate replace to='/' />} />
-        )}
+        <Route
+          path='/home'
+          element={loginGate ? <Home /> : <Navigate replace to='/' />}
+        />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </HashRouter>
