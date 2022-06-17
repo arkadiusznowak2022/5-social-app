@@ -27,7 +27,6 @@ export const checkLoginTime = (timeToLogout) => {
   const loginTime = JSON.parse(storage).loginTime;
   const now = Date.now();
   const result = now - loginTime;
-  console.log(result);
   if (result > timeToLogout) {
     localStorage.removeItem('chatterfield');
     console.log('off');
