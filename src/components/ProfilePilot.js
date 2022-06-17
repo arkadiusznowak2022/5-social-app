@@ -21,7 +21,7 @@ function ProfilePilot({ profileData, managerHandler }) {
   return (
     <div className={`profile-cont ${manageClass(managerType)}`}>
       <div className='pilot'>
-        <img src={profileData.avatar_url} />
+        <img src={profileData.avatar_url} alt='avatar' />
         <h3>{profileData.username}</h3>
         <p>{profileData.email}</p>
         <div className='buttons-panel'>

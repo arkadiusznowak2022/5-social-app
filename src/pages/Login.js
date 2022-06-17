@@ -40,7 +40,7 @@ function Login(props) {
       const { username, jwt_token: jwtToken } = res.data;
       localStorage.setItem(
         'chatterfield',
-        JSON.stringify({ username, jwtToken })
+        JSON.stringify({ username, jwtToken, loginTime: Date.now() })
       );
       props.setLoginGate(true);
       navigate('/');

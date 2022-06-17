@@ -5,3 +5,4 @@ export const SHOW_MSG_TIME = 2000;
 
 export const LOGIN_DEMO_MSG = 'login: adam, pass: 1234';
 export const TIME_TO_LOGIN_POPUP = 10000;
+export const TIME_TO_LOGOUT = 3_000_000;

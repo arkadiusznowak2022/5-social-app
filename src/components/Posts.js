@@ -22,7 +22,7 @@ function Posts({
   const showLikeOrNot = (e) => {
     if (!token) return;
     const id = e.target.id;
-    if (id == idSelect) setIdSelect('');
+    if (id === idSelect) setIdSelect('');
     else setIdSelect(e.target.id);
   };
 
@@ -38,7 +38,7 @@ function Posts({
 
       return (
         <li className='post' key={el.id}>
-          <img src={el.user.avatar_url} />
+          <img src={el.user.avatar_url} alt='avatar' />
           <div className='post-content'>
             <p className='date'>{created}</p>
             <i
@@ -61,7 +61,7 @@ function Posts({
               id={el.id}
               likePost={likePost}
               dislikePost={dislikePost}
-              active={idSelect == el.id}
+              active={+idSelect === el.id}
               showLikeOrNot={showLikeOrNot}
             />
             <p className='username'>{el.user.username}</p>

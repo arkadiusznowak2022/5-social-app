@@ -13,7 +13,7 @@ function UsersList({
     const markup = users.map((el) => {
       return (
         <li key={el.id}>
-          <img src={el.avatar_url} />
+          <img src={el.avatar_url} alt='avatar' />
           <h3>{el.username}</h3>
           <p>({el.email})</p>
           {activeBtn === 'friends' ? (

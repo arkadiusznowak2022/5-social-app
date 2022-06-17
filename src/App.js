@@ -17,13 +17,18 @@ import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
 
 import Nav from './components/Nav';
+import { checkLoginTime } from './data/tools';
+import { useEffect } from 'react';
+import { TIME_TO_LOGOUT } from './data/config';
 
 function App() {
-  const loginFlag = localStorage.getItem('chatterfield');
-  const [loginGate, setLoginGate] = useState(loginFlag && true);
+  const storage = localStorage.getItem('chatterfield');
+  const [loginGate, setLoginGate] = useState(
+    checkLoginTime(storage, TIME_TO_LOGOUT)
+  );
 
   return (
-    <HashRouter>
+    <HashRouter basename='/'>
       <Nav loginGate={loginGate} setLoginGate={setLoginGate} />
       <Routes>
         <Route path='/' element={<Main />}></Route>
@@ -33,7 +38,10 @@ function App() {
         />
         <Route path='/login' element={<Login setLoginGate={setLoginGate} />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/home' element={<Home />} />
+        {loginGate && <Route path='/home' element={<Home />} />}
+        {!loginGate && (
+          <Route path='/home' element={<Navigate replace to='/' />} />
+        )}
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </HashRouter>

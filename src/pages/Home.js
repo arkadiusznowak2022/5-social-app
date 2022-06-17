@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Home.css';
 
 import { API } from '../data/API';
@@ -21,7 +21,6 @@ function Home() {
   /////////////////
   //// API OBJECTS
 
-  // const profileAPI = new API('profile', jwtToken);
   const [profileAPI] = useState(new API('profile', jwtToken));
   const choosePostsType = {
     last: new API('last', jwtToken),
@@ -37,6 +36,7 @@ function Home() {
   const removeLikeAPI = new API('dislike', jwtToken);
   const newPostAPI = new API('newPost', jwtToken);
   const delPostAPI = new API('delPost', jwtToken);
+  const navigate = useNavigate();
 
   //////////////
   //// USE EFFECT
@@ -62,7 +62,6 @@ function Home() {
   const clickDeletePost = (e) => {
     delPostAPI.setData({ post_id: e.target.id });
     delPostAPI.getData((res) => {
-      console.log(res);
       postsAPI.getData(displayPosts);
     });
   };
@@ -174,6 +173,9 @@ function Home() {
     setUsers(res.data);
   };
 
+  // if (performance.getEntriesByType('navigation')[0].type === 'reload') {
+  //   navigate('/');
+  // }
   //////////////
   //// MARKUP
 

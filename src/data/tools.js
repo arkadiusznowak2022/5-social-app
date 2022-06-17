@@ -19,3 +19,17 @@ export function checkPassword(pass) {
 
   return flag;
 }
+
+export const checkLoginTime = (storage, timeToLogout) => {
+  if (!storage) return false;
+
+  const loginTime = JSON.parse(storage).loginTime;
+  const now = Date.now();
+  const result = now - loginTime;
+  console.log(result);
+  if (result > timeToLogout) {
+    localStorage.removeItem('chatterfield');
+    console.log('off');
+    return false;
+  } else return true;
+};
