@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './Main.css';
 import { useNavigate } from 'react-router-dom';
 import { checkLoginTime } from '../data/tools';

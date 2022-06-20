@@ -29,7 +29,6 @@ export const checkLoginTime = (timeToLogout) => {
   const result = now - loginTime;
   if (result > timeToLogout) {
     localStorage.removeItem('chatterfield');
-    console.log('off');
     return false;
   } else return true;
 };

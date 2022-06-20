@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './Home.css';
 
 import { API } from '../data/API';
@@ -8,18 +8,14 @@ import Posts from '../components/Posts';
 import UsersList from '../components/UsersList';
 
 function Home() {
-  //////////////
-  //// STATE
-
+  /////////////////
+  //// VARIABLES
   const { jwtToken } = useLocation().state;
   const [profileData, setProfileData] = useState('');
   const [posts, setPosts] = useState('');
   const [users, setUsers] = useState('');
   const [activeBtn, setActiveBtn] = useState('friends');
   const [likes, setLikes] = useState([]);
-
-  /////////////////
-  //// API OBJECTS
 
   const [profileAPI] = useState(new API('profile', jwtToken));
   const choosePostsType = {
@@ -28,7 +24,7 @@ function Home() {
     newerThen: new API('newerThen', jwtToken),
   };
   const [postsAPI, setpostsAPI] = useState(choosePostsType.last);
-  const allFollowsAPI = new API('allfollows', jwtToken);
+  const [allFollowsAPI] = useState(new API('allfollows', jwtToken));
   const disfollowAPI = new API('disfollow', jwtToken);
   const recommendsAPI = new API('recommendations', jwtToken);
   const addUserAPI = new API('follow', jwtToken);
@@ -36,10 +32,27 @@ function Home() {
   const removeLikeAPI = new API('dislike', jwtToken);
   const newPostAPI = new API('newPost', jwtToken);
   const delPostAPI = new API('delPost', jwtToken);
-  const navigate = useNavigate();
 
-  //////////////
+  ////////////////
   //// USE EFFECT
+  const displayPosts = useCallback(
+    (res) => {
+      const email = profileData.email || '';
+
+      const likesArr = [];
+      res.data.forEach((post) => {
+        post.likes.forEach((el) => {
+          if (el.email === email) {
+            likesArr.push(post.id.toString());
+          }
+        });
+      });
+
+      setLikes(likesArr);
+      setPosts(res.data);
+    },
+    [profileData.email]
+  );
 
   useEffect(() => {
     profileAPI.getData((res) => {
@@ -49,19 +62,18 @@ function Home() {
 
   useEffect(() => {
     postsAPI.getData(displayPosts);
-    allFollowsAPI.getData(displayUsersList);
-  }, [profileData]);
+  }, [postsAPI, profileData, users, displayPosts]);
 
   useEffect(() => {
-    postsAPI.getData(displayPosts);
-  }, [users]);
+    allFollowsAPI.getData(displayUsersList);
+  }, [profileData, allFollowsAPI]);
 
-  //////////////
+  ////////////////
   //// UI ACTIONS
 
   const clickDeletePost = (e) => {
     delPostAPI.setData({ post_id: e.target.id });
-    delPostAPI.getData((res) => {
+    delPostAPI.getData(() => {
       postsAPI.getData(displayPosts);
     });
   };
@@ -123,7 +135,6 @@ function Home() {
     if (type === 'newest') {
       const API = choosePostsType.last;
       setpostsAPI(API);
-      API.getData(displayPosts);
       return;
     }
     if (type === 'add') {
@@ -143,27 +154,10 @@ function Home() {
 
     setpostsAPI(API);
     API.setData({ date: data[type] });
-    API.getData(displayPosts);
   };
 
-  //////////////
-  //// API HANDLERS
-
-  const displayPosts = (res) => {
-    const email = profileData.email || '';
-
-    const likesArr = [];
-    res.data.forEach((post) => {
-      post.likes.forEach((el) => {
-        if (el.email === email) {
-          likesArr.push(post.id.toString());
-        }
-      });
-    });
-
-    setLikes(likesArr);
-    setPosts(res.data);
-  };
+  ////////////
+  // API HANDLERS
 
   const refreshPosts = (res) => {
     setPosts(res.data);
@@ -173,9 +167,6 @@ function Home() {
     setUsers(res.data);
   };
 
-  // if (performance.getEntriesByType('navigation')[0].type === 'reload') {
-  //   navigate('/');
-  // }
   //////////////
   //// MARKUP
 

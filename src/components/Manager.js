@@ -42,7 +42,7 @@ function Manager({ type, managerHandler, manageManager }) {
       )}
       {type && type !== 'newest' && (
         <button
-          onClick={(e) => {
+          onClick={() => {
             setTextVal('');
             manageManager('');
             managerHandler(type, data);

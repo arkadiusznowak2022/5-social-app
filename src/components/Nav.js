@@ -12,7 +12,7 @@ function Nav(props) {
     logoutAPI.getData(handleAPIAnswer);
   };
 
-  const handleAPIAnswer = (res) => {
+  const handleAPIAnswer = () => {
     props.setLoginGate(false);
     localStorage.removeItem('chatterfield');
     navigate('/');

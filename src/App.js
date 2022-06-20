@@ -1,13 +1,6 @@
 import './App.css';
-import { useState } from 'react';
-import {
-  BrowserRouter,
-  HashRouter,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from 'react-router-dom';
+import React, { useState } from 'react';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import Main from './pages/Main';
 import LoggedOut from './pages/LoggedOut';
@@ -18,11 +11,9 @@ import ErrorPage from './pages/ErrorPage';
 
 import Nav from './components/Nav';
 import { checkLoginTime } from './data/tools';
-import { useEffect } from 'react';
 import { TIME_TO_LOGOUT } from './data/config';
 
 function App() {
-  const storage = localStorage.getItem('chatterfield');
   const [loginGate, setLoginGate] = useState(checkLoginTime(TIME_TO_LOGOUT));
 
   return (
